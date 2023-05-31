@@ -76,9 +76,9 @@ class MicropostsController extends Controller
         $favorite_users = $micropost->favorite_users()->paginate(10);
 
         // それらを表示
-        // return view('microposts.favorite_users', [
-        //     'microposts' => $micropost,
-        //     'favorite_users' => $favorite_users,
-        // ]);
+        return view('microposts.favorite_users', [
+            'microposts' => $micropost,
+            'favorite_users' => $favorite_users,
+        ]);
     }
 }
