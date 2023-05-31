@@ -9,7 +9,7 @@
                             <img src="{{ Gravatar::get($micropost->user->email) }}" alt="" />
                         </div>
                     </div>
-                    <div>
+                    <div class="w-5/6">
                         <div>
                             {{-- 投稿の所有者のユーザ詳細ページへのリンク --}}
                             <a class="link link-hover text-info" href="{{ route('users.show', $micropost->user->id) }}">{{ $micropost->user->name }}</a>
@@ -19,19 +19,25 @@
                             {{-- 投稿内容 --}}
                             <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                         </div>
-                    </div>
-                    <div>
-                        <div>
-                            {{-- お気に入りボタン --}}
-                            @include('user_favorite.favorite_button')
+                        <div class="flex">
+                            <div>
+                                {{-- お気に入りボタン --}}
+                                @include('user_favorite.favorite_button')
+                            </div>
+                            <div>
+                                {{-- お気に入り数 --}}
+                                <a class="badge shadow" href=#>{{ $micropost->favorite_users->count() }}</a>
+                            </div>
                         </div>
+                    </div>
+                    <div class="w-1/6">
                         <div>
                             @if (Auth::id() == $micropost->user_id)
                                 {{-- 投稿削除ボタンのフォーム --}}
                                 <form method="POST" action="{{ route('microposts.destroy', $micropost->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-error btn-sm normal-case"
+                                    <button type="submit" class="btn btn-outline btn-sm normal-case"
                                         onclick="return confirm('Delete id = {{ $micropost->id }} ?')">Delete</button>
                                 </form>
                             @endif
