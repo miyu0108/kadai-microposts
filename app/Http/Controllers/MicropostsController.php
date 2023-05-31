@@ -57,4 +57,28 @@ class MicropostsController extends Controller
         return back()
             ->with('Delete Failed');
     }
+    
+    /**
+     * 投稿をお気に入りしているユーザー一覧ページを表示するアクション。
+     *
+     * @param  $id  ユーザのid
+     * @return \Illuminate\Http\Response
+     */
+    public function favorite_users($id)
+    {
+        // idの値で投稿を検索して取得
+        $micropost = \App\Models\Micropost::findOrFail($id);
+
+        // 関係するモデルの件数をロード
+        $micropost->loadRelationshipCounts();
+
+        // 投稿をお気に入りしているユーザー一覧を取得
+        $favorite_users = $micropost->favorite_users()->paginate(10);
+
+        // それらを表示
+        // return view('microposts.favorite_users', [
+        //     'microposts' => $micropost,
+        //     'favorite_users' => $favorite_users,
+        // ]);
+    }
 }
