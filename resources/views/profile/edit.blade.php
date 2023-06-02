@@ -1,29 +1,32 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+@section('content')
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
-
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
-            </div>
-        </div>
+    <div class="prose ml-4">
+        <h2>{{ $user->name }} のプロフィール編集ページ</h2>
     </div>
-</x-app-layout>
+
+    <div class="flex justify-center">
+        <form method="POST" action="{{ route('profile.update', $user) }}" class="w-1/2">
+            @csrf
+            @method('PUT')
+                
+                <div class="form-control my-4">
+                    <label for="name" class="label">
+                        <span class="label-text">名前:</span>
+                    </label>
+                    <input type="text" name="name" value="{{ $user->name }}" class="input input-bordered w-full">
+                </div>
+                
+                <div class="form-control my-4">
+                    <label for="email" class="label">
+                        <span class="label-text">メールアドレス:</span>
+                    </label>
+                    <input type="text" name="email" value="{{ $user->email }}" class="input input-bordered w-full">
+                </div>
+
+            <button type="submit" class="btn btn-primary btn-outline">更新</button>
+        </form>
+    </div>
+
+@endsection

@@ -8,53 +8,64 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    public function edit($id)
     {
+        // idの値でメッセージを検索して取得
+        $user = User::findOrFail($id);
+
+        // メッセージ編集ビューでそれを表示
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
         ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request, $id)
     {
-        $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // バリデーション
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|max:255',
+        ]);
+        
+        // idの値でメッセージを検索して取得
+        $user = User::findOrFail($id);
+        
+        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合はメッセージを更新
+        if (\Auth::id() === $user->id) {
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->save();
+            return redirect('/')
+                ->with('success','Update Successful');
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        // トップページへリダイレクトさせる
+        return redirect('/')
+            ->with('Update Failed. You are not authorized to edit.');
     }
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy($id)
     {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current-password'],
-        ]);
+        // idの値で投稿を検索して取得
+        $user = User::findOrFail($id);
+        
+        // 認証済みユーザ（閲覧者）であればユーザーを削除
+        if (\Auth::id() === $user->id) {
+            Auth::logout();
+            $user->delete();
+        }
 
-        $user = $request->user();
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 }
