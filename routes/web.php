@@ -35,10 +35,11 @@ Route::group(['middleware' => ['auth']], function () {
     });                                                                                             // 追記
     Route::resource('profile', ProfileController::class, ['only' => ['edit', 'update','destroy']]);
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
-    Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'destroy']]);
+    Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'edit', 'update', 'destroy']]);
     Route::group(['prefix' => 'microposts/{id}'], function () {                                             // 追加
         Route::post('favorite', [FavoritesController::class, 'store'])->name('favorites.favorite');        // 追加
         Route::delete('unfavorite', [FavoritesController::class, 'destroy'])->name('favorites.unfavorite'); // 追加
+        Route::get('favorite_users', [FavoritesController::class, 'favorite_users'])->name('favorite_users'); // 追加
     });
     
 });
