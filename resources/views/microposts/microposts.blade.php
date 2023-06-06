@@ -25,8 +25,8 @@
                                 @include('user_favorite.favorite_button')
                             </div>
                             <div>
-                                {{-- お気に入り数 --}}
-                                <a class="badge shadow" href=#>{{ $micropost->favorite_users->count() }}</a>
+                                {{-- お気に入りしているユーザー --}}
+                                {{--@include('microposts.favorite_users')--}}
                             </div>
                         </div>
                     </div>
@@ -40,6 +40,8 @@
                                     <button type="submit" class="btn btn-outline btn-sm normal-case"
                                         onclick="return confirm('Delete id = {{ $micropost->id }} ?')">Delete</button>
                                 </form>
+                                {{-- 投稿編集ボタンのフォーム --}}
+                                <a href="{{ route('microposts.edit', ['micropost'=>$micropost->id, 'redirect_url'=>request()->path()]) }}" class='btn normal-case btn-sm'>編集</a>
                             @endif
                         </div>
                     </div>
