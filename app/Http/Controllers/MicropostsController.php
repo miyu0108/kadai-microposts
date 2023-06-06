@@ -41,6 +41,53 @@ class MicropostsController extends Controller
         return back();
     }
     
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        // idの値でメッセージを検索して取得
+        $micropost = \App\Models\Micropost::findOrFail($id);
+
+        // メッセージ編集ビューでそれを表示
+        return view('microposts.edit', [
+            'micropost' => $micropost,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        // バリデーション
+        $request->validate([
+            'content' => 'required|max:255',
+        ]);
+        
+        // idの値でメッセージを検索して取得
+        $micropost = \App\Models\Micropost::findOrFail($id);
+        
+        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合はメッセージを更新
+        if (\Auth::id() === $micropost->user_id) {
+            $micropost->content = $request->content;
+            $micropost->save();
+            return back()
+                ->with('success','Update Successful');
+        }
+
+        // トップページへリダイレクトさせる
+        return redirect('/')
+            ->with('Update Failed. You are not authorized to edit.');
+    }
+    
     public function destroy($id)
     {
         // idの値で投稿を検索して取得
@@ -76,9 +123,11 @@ class MicropostsController extends Controller
         $favorite_users = $micropost->favorite_users()->paginate(10);
 
         // それらを表示
-        return view('microposts.favorite_users', [
+        $favorite_users = [
             'microposts' => $micropost,
             'favorite_users' => $favorite_users,
-        ]);
+        ];
+        
+        return $favorite_users;
     }
 }
