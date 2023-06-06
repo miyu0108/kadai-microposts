@@ -15,12 +15,14 @@
             </div>
         </div>
     @else
-        <div class="prose hero bg-base-200 mx-auto max-w-full rounded">
+        <div class="prose hero mx-auto max-w-full rounded">
             <div class="hero-content text-center my-10">
                 <div class="max-w-md mb-10">
-                    <h2>Welcome to the Microposts</h2>
+                    <h2>Welcome to the Microposts!</h2>
+                    <img src="https://cdn.pixabay.com/photo/2014/04/02/11/17/speech-bubbles-305824_1280.png" alt="chat">
                     {{-- ユーザ登録ページへのリンク --}}
-                    <a class="btn btn-primary btn-lg normal-case" href="{{ route('register') }}">Sign up now!</a>
+                    <a class="btn btn-primary btn-lg normal-case" href="{{ route('register') }}">Sign up</a>
+                    <a class="btn btn-primary btn-lg normal-case" href="{{ route('login') }}">Login</a>
                 </div>
             </div>
         </div>

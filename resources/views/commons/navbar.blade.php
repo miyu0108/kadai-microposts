@@ -2,7 +2,13 @@
     <nav class="navbar bg-neutral text-neutral-content">
         {{-- トップページへのリンク --}}
         <div class="flex-1">
-            <h1><a class="btn btn-ghost normal-case text-xl" href="/">Microposts</a></h1>
+            <h1>
+                <img src="https://cdn.pixabay.com/photo/2014/04/02/11/17/speech-bubbles-305824_1280.png" height="3%" width="3%" alt="chat" class="inline">
+                <a class="btn btn-ghost normal-case text-xl text-left" href="/">
+                    <!--<img src="https://cdn.pixabay.com/photo/2014/04/02/11/17/speech-bubbles-305824_1280.png" height="3%" width="3%" alt="chat" class="inline text-left">-->
+                    Microposts
+                </a>
+            </h1>
         </div>
 
         <div class="flex-none">
