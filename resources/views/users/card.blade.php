@@ -1,16 +1,20 @@
 <div class="card border border-base-300">
     <div class="card-body bg-base-200 text-4xl">
-        <table class="table w-full">
-        <tr>
-            <th class="text-xl text-center normal-case">name</th>
-            <td class="text-xl text-center normal-case">{{ $user->name }}</td>
-        </tr>
-        @if (Auth::id() == $user->id)
+        <table class="table-fixed">
             <tr>
-                <th class="text-xl text-center normal-case">email</th>
-                <td class="text-xl text-center normal-case">{{ $user->email }}</td>
+                <th class="text-lg text-center normal-case">name</th>
+                <td class="text-lg text-center normal-case">{{ $user->name }}</td>
             </tr>
-        @endif
+            @if (Auth::id() == $user->id)
+                <tr>
+                    <th class="text-lg text-center normal-case">email</th>
+                    <td class="text-lg text-center normal-case">{{ $user->email }}</td>
+                </tr>
+            @endif
+            <tr>
+                <th class="text-lg text-center normal-case">message</th>
+                <td class="text-base text-center normal-case">{{ $user->profile_message }}</td>
+            </tr>
         </table>
         @if (Auth::id() == $user->id)
             <div class="flex">

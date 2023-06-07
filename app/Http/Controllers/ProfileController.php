@@ -31,7 +31,6 @@ class ProfileController extends Controller
         // バリデーション
         $request->validate([
             'name' => 'required|max:255',
-            'email' => 'required|max:255',
         ]);
         
         // idの値でメッセージを検索して取得
@@ -40,7 +39,7 @@ class ProfileController extends Controller
         // 認証済みユーザ（閲覧者）がその投稿の所有者である場合はメッセージを更新
         if (\Auth::id() === $user->id) {
             $user->name = $request->name;
-            $user->email = $request->email;
+            $user->profile_message = $request->profile_message;
             $user->save();
             return redirect('/')
                 ->with('success','Update Successful');

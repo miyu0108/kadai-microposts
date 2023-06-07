@@ -19,10 +19,10 @@
                 </div>
                 
                 <div class="form-control my-4">
-                    <label for="email" class="label">
-                        <span class="label-text">メールアドレス:</span>
+                    <label for="profile_message" class="label">
+                        <span class="label-text">メッセージ:</span>
                     </label>
-                    <input type="text" name="email" value="{{ $user->email }}" class="input input-bordered w-full">
+                    <input type="text" name="profile_message" value="{{ $user->profile_message }}" class="input input-bordered w-full">
                 </div>
 
             <button type="submit" class="btn btn-primary btn-outline">更新</button>
