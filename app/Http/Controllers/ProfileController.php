@@ -41,7 +41,7 @@ class ProfileController extends Controller
             $user->name = $request->name;
             $user->profile_message = $request->profile_message;
             $user->save();
-            return redirect('/')
+            return redirect($request->redirect_url)
                 ->with('success','Update Successful');
         }
 
