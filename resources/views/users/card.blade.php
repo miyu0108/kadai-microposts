@@ -1,6 +1,6 @@
 <div class="card border border-base-300">
     <div class="card-body bg-base-200 text-4xl">
-        <table class="table-fixed">
+        <table class="table">
             <tr>
                 <th class="text-lg text-center normal-case">name</th>
                 <td class="text-lg text-center normal-case">{{ $user->name }}</td>
@@ -13,7 +13,7 @@
             @endif
             <tr>
                 <th class="text-lg text-center normal-case">message</th>
-                <td class="text-base text-center normal-case">{{ $user->profile_message }}</td>
+                <td class="text-base text-center normal-case white-space-normal">{{ $user->profile_message }}</td>
             </tr>
         </table>
         @if (Auth::id() == $user->id)

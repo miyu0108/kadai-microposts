@@ -26,7 +26,9 @@
                             </div>
                             <div>
                                 {{-- お気に入りしているユーザー --}}
-                                {{--@include('microposts.favorite_users')--}}
+                                <a class="badge bg-white text-black" href="{{ route('favorite_users', $micropost->id ) }}">
+                                    {{ $micropost->favorite_users->count() }}
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -36,7 +38,7 @@
                                 <!--<ul class="menu menu-horizontal p-0 hidden sm:inline-flex">-->
                                 <button class="btn btn-ghost btn-sm">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
                                     </svg>
                                 </button>
                                 <ul class="p-2 bg-gray dropdown-content">

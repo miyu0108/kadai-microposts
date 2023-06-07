@@ -10,7 +10,7 @@
         <form method="POST" action="{{ route('microposts.update', $micropost->id) }}" class="w-1/2">
             @csrf
             @method('PUT')
-                
+            <input type="hidden" name="redirect_url" value="{{ request()->query()['redirect_url'] }}">
             <div class="form-control my-4">
                 <label for="content" class="label">
                     <span class="label-text">micropost:</span>

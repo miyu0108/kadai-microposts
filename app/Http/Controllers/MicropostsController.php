@@ -79,7 +79,7 @@ class MicropostsController extends Controller
         if (\Auth::id() === $micropost->user_id) {
             $micropost->content = $request->content;
             $micropost->save();
-            return back()
+            return redirect($request->redirect_url)
                 ->with('success','Update Successful');
         }
 
@@ -123,11 +123,9 @@ class MicropostsController extends Controller
         $favorite_users = $micropost->favorite_users()->paginate(10);
 
         // それらを表示
-        $favorite_users = [
-            'microposts' => $micropost,
-            'favorite_users' => $favorite_users,
-        ];
-        
-        return $favorite_users;
+        return view('microposts.favorite_users', [
+            'micropost' => $micropost,
+            'users' => $favorite_users,
+        ]);
     }
 }
