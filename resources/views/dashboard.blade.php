@@ -21,8 +21,8 @@
                     <h2>Welcome to the Microposts!</h2>
                     <img src="https://cdn.pixabay.com/photo/2014/04/02/11/17/speech-bubbles-305824_1280.png" alt="chat">
                     {{-- ユーザ登録ページへのリンク --}}
-                    <a class="btn btn-primary btn-lg normal-case" href="{{ route('register') }}">Sign up</a>
-                    <a class="btn btn-primary btn-lg normal-case" href="{{ route('login') }}">Login</a>
+                    <a class="btn btn-outline btn-lg normal-case" href="{{ route('register') }}">Sign up</a>
+                    <a class="btn btn-outline btn-lg normal-case" href="{{ route('login') }}">Login</a>
                 </div>
             </div>
         </div>
