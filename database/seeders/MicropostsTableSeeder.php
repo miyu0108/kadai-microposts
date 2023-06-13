@@ -16,10 +16,10 @@ class MicropostsTableSeeder extends Seeder
      */
     public function run()
     {
-        $user_num = 30;
+        $user_num = 20;
         $post_num_max = 20;
         $follow_num_max = 10;
-        $favorite_num_max = 15;
+        $favorite_num_max = 10;
         $content = [
             'お腹すいた。', 
             '眠い。',
