@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Micropost; 
+use App\Models\User; 
 
 class MicropostsController extends Controller
 {
@@ -130,7 +131,7 @@ class MicropostsController extends Controller
         ]);
     }
     
-    public function search(Request $request)       
+    public function search(Request $request)     
     {
         // マイクロポスト一覧をページネートで取得
         $microposts = Micropost::orderBy('id', 'desc')->paginate(10);
@@ -140,6 +141,44 @@ class MicropostsController extends Controller
         
         // クエリビルダ
         $query = Micropost::query();
+        
+        // もし検索フォームにキーワードが入力されたら
+        if ($search) {
+            // 全角スペースを半角に変換
+            $spaceConversion = mb_convert_kana($search,'s');
+            // 単語を半角スペースで区切り、配列にする
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+            // 単語をループで回し、マイクロポストと一致するものがあれば、$queryとして保持される
+            foreach($wordArraySearched as $value) {
+                $query->where('content', 'like', '%'.$value.'%');
+            }
+            
+            // 上記で取得した$queryをページネートにし、変数$micropostsに代入
+            $microposts = $query->paginate(10);
+        
+        }
+        
+        // view にmicropostsとsearchを変数として渡す
+        return view('microposts.index')
+            ->with([
+                'microposts' => $microposts,
+                'search' => $search,
+                ]);
+    }
+    
+    public function user_search(Request $request, $id)       
+    {
+        // id でユーザーを検索
+        $user = User::findOrFail($id);
+        
+        // そのユーザーのマイクロポスト一覧をページネートで取得
+        $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
+        
+        // 検索フォームで入力された値を取得する
+        $search = $request->input('search');
+        
+        // クエリビルダ
+        $query = $user->microposts();
         
         // もし検索フォームにキーワードが入力されたら
         if ($search) {

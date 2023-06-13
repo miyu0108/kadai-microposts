@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('followings', [UsersController::class, 'followings'])->name('users.followings');
         Route::get('followers', [UsersController::class, 'followers'])->name('users.followers');
         Route::get('favorites', [UsersController::class, 'favorites'])->name('users.favorites');
+        Route::get('microposts_search', [MicropostsController::class, 'user_search'])->name('microposts.user_search');
     });                                                                                             
     Route::resource('profile', ProfileController::class, ['only' => ['edit', 'update','destroy']]);
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
