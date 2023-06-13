@@ -152,8 +152,8 @@ class MicropostsController extends Controller
                 $query->where('content', 'like', '%'.$value.'%');
             }
             
-        // 上記で取得した$queryをページネートにし、変数$usersに代入
-        $microposts = $query->paginate(10);
+            // 上記で取得した$queryをページネートにし、変数$micropostsに代入
+            $microposts = $query->paginate(10);
         
         }
         
