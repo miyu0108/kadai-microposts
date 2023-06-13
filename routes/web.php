@@ -26,22 +26,22 @@ Route::get('/dashboard', [MicropostsController::class, 'index'])->middleware(['a
 require __DIR__.'/auth.php';
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::group(['prefix' => 'users/{id}'], function () {                                          // 追記
-        Route::post('follow', [UserFollowController::class, 'store'])->name('user.follow');         // 追記
-        Route::delete('unfollow', [UserFollowController::class, 'destroy'])->name('user.unfollow'); // 追記
-        Route::get('followings', [UsersController::class, 'followings'])->name('users.followings'); // 追記
-        Route::get('followers', [UsersController::class, 'followers'])->name('users.followers');    // 追記
-        Route::get('favorites', [UsersController::class, 'favorites'])->name('users.favorites');    // 追加
-    });                                                                                             // 追記
+    Route::group(['prefix' => 'users/{id}'], function () {
+        Route::post('follow', [UserFollowController::class, 'store'])->name('user.follow');
+        Route::delete('unfollow', [UserFollowController::class, 'destroy'])->name('user.unfollow');
+        Route::get('followings', [UsersController::class, 'followings'])->name('users.followings');
+        Route::get('followers', [UsersController::class, 'followers'])->name('users.followers');
+        Route::get('favorites', [UsersController::class, 'favorites'])->name('users.favorites');
+    });                                                                                             
     Route::resource('profile', ProfileController::class, ['only' => ['edit', 'update','destroy']]);
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
     Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'edit', 'update', 'destroy']]);
     Route::get('users_search', [UsersController::class, 'search'])->name('users.search');
     Route::get('microposts_search', [MicropostsController::class, 'search'])->name('microposts.search');
-    Route::group(['prefix' => 'microposts/{id}'], function () {                                             // 追加
-        Route::post('favorite', [FavoritesController::class, 'store'])->name('favorites.favorite');        // 追加
-        Route::delete('unfavorite', [FavoritesController::class, 'destroy'])->name('favorites.unfavorite'); // 追加
-        Route::get('favorite_users', [MicropostsController::class, 'favorite_users'])->name('favorite_users'); // 追加
+    Route::group(['prefix' => 'microposts/{id}'], function () {
+        Route::post('favorite', [FavoritesController::class, 'store'])->name('favorites.favorite');
+        Route::delete('unfavorite', [FavoritesController::class, 'destroy'])->name('favorites.unfavorite');
+        Route::get('favorite_users', [MicropostsController::class, 'favorite_users'])->name('favorite_users');
     });
     
 });
