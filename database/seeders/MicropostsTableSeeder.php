@@ -16,10 +16,10 @@ class MicropostsTableSeeder extends Seeder
      */
     public function run()
     {
-        $user_num = 20;
+        $user_num = 30;
         $post_num_max = 20;
         $follow_num_max = 10;
-        $favorite_num_max = 10;
+        $favorite_num_max = 15;
         $content = [
             'お腹すいた。', 
             '眠い。',
@@ -30,6 +30,7 @@ class MicropostsTableSeeder extends Seeder
             '一緒にスシロー行く人募集！',
             'パブロ・ディエゴ・ホセ・フランシスコ・デ・パウラ・ホアン・ネポムセーノ･マリーア・デ・ロス・レメディオス・クリスピン・クリスピアーノ・デ・ラ・サンディシマ・トリニダード･ルイス・イ・ピカソ'
         ];
+        
         for($i = 1; $i <= $user_num; $i++) {
             // ユーザーを作成
             DB::table('users')->insert([
@@ -51,17 +52,15 @@ class MicropostsTableSeeder extends Seeder
         $micropost_num = DB::table('microposts')->count();
         for($i = 1; $i <= $user_num; $i++) {   
             // ランダムにお気に入りする
-            for ($k = 0; $k <= rand(0, $favorite_num_max); $k++) {
-                $array = range(1, $micropost_num);
-                shuffle($array);
-                for ($h = 0; $h <= rand(0,$k-1); $h++)
-                    print 'user_id: '. $i;
-                    print 'micropost_num: ' . $array[$h] . PHP_EOL;
-                    DB::table('favorites')->insert([
-                        'user_id' => $i,
-                        'micropost_id' => $array[$h]
-                    ]);
-            }
+            $favorite_num = rand(0, $favorite_num_max);
+            $array = range(1, $micropost_num);
+            print 'user_id: '.$i.'のお気に入り数は' . $favorite_num . PHP_EOL;
+            shuffle($array);
+            for ($h = 0; $h<=$favorite_num ; $h++)
+                DB::table('favorites')->insert([
+                    'user_id' => $i,
+                    'micropost_id' => $array[$h]
+                ]);
             
             
             // ランダムにフォローする
