@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('users', UsersController::class, ['only' => ['index', 'show']]);
     Route::resource('microposts', MicropostsController::class, ['only' => ['store', 'edit', 'update', 'destroy']]);
     Route::get('users_search', [UsersController::class, 'search'])->name('users.search');
+    Route::get('microposts_search', [MicropostsController::class, 'search'])->name('microposts.search');
     Route::group(['prefix' => 'microposts/{id}'], function () {                                             // 追加
         Route::post('favorite', [FavoritesController::class, 'store'])->name('favorites.favorite');        // 追加
         Route::delete('unfavorite', [FavoritesController::class, 'destroy'])->name('favorites.unfavorite'); // 追加
