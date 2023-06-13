@@ -13,10 +13,10 @@ class UsersController extends Controller
     {
         // ユーザ一覧をidの降順で取得
         $users = User::orderBy('id', 'desc')->paginate(10);
-
+ 
         // ユーザ一覧ビューでそれを表示
         return view('users.index', [
-            'users' => $users,
+             'users' => $users,
         ]);
     }
     
@@ -108,5 +108,40 @@ class UsersController extends Controller
             'user' => $user,
             'microposts' => $favorites,
         ]);
+    }
+    
+    public function search(Request $request)       
+    {
+        // ユーザー一覧をページネートで取得
+        $users = User::orderBy('id', 'desc')->paginate(10);
+        
+        // 検索フォームで入力された値を取得する
+        $search = $request->input('search');
+        
+        // クエリビルダ
+        $query = User::query();
+        
+        // もし検索フォームにキーワードが入力されたら
+        if ($search) {
+            // 全角スペースを半角に変換
+            $spaceConversion = mb_convert_kana($search,'s');
+            // 単語を半角スペースで区切り、配列にする
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+            // 単語をループで回し、ユーザーネームと一致するものがあれば、$queryとして保持される
+            foreach($wordArraySearched as $value) {
+                $query->where('name', 'like', '%'.$value.'%');
+            }
+            
+        // 上記で取得した$queryをページネートにし、変数$usersに代入
+        $users = $query->paginate(10);
+        
+        }
+        
+        // view にusersとsearchを変数として渡す
+        return view('users.index')
+            ->with([
+                'users' => $users,
+                'search' => $search,
+                ]);
     }
 }
