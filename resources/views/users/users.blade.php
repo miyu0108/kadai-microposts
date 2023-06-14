@@ -20,6 +20,7 @@
             </li>
         @endforeach
     </ul>
-    {{-- ページネーションのリンク --}}
-    {{ $users->links() }}
+    <div>
+        {{ $users->appends(request()->input())->links() }}
+    </div>
 @endif
