@@ -71,6 +71,8 @@
             @endforeach
         </ul>
         {{-- ページネーションのリンク --}}
-        {{ $microposts->links() }}
+        <div>
+            {{ $microposts->appends(request()->input())->links() }}
+        </div>
     @endif
 </div>
