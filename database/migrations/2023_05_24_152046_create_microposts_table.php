@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
             
             // 外部キー制約
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,6 +31,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('microposts');
+        Schema::table('microposts', function (Blueprint $table) {
+            // 外部キー削除
+            $table->dropForeign('microposts_user_id_foreign');
+            $table->dropIfExists('microposts');
+        });
     }
 };
