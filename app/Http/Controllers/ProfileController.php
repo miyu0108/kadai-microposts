@@ -17,10 +17,14 @@ class ProfileController extends Controller
         // idの値でメッセージを検索して取得
         $user = User::findOrFail($id);
 
-        // メッセージ編集ビューでそれを表示
-        return view('profile.edit', [
-            'user' => $user,
-        ]);
+        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、メッセージ編集ビューでそれを表示
+        if (\Auth::id() === $user->id) {
+            return view('profile.edit', [
+                'user' => $user,
+            ]);
+        }
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**

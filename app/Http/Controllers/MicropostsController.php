@@ -54,10 +54,15 @@ class MicropostsController extends Controller
         // idの値でメッセージを検索して取得
         $micropost = \App\Models\Micropost::findOrFail($id);
 
-        // メッセージ編集ビューでそれを表示
-        return view('microposts.edit', [
-            'micropost' => $micropost,
-        ]);
+        // 認証済みユーザ（閲覧者）がその投稿の所有者である場合はメッセージ編集ビューでそれを表示
+        if (\Auth::id() === $micropost->user_id) {
+            return view('microposts.edit', [
+                'micropost' => $micropost,
+            ]);
+        }
+        
+        // トップページへリダイレクトさせる
+        return redirect('/');
     }
 
     /**
